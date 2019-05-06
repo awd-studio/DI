@@ -1,0 +1,30 @@
+{
+    "name": "awd-studio/di",
+    "description": "The implementation of a dependency injection on PHP",
+    "type": "library",
+    "require": {
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.1",
+        "phpunit/php-code-coverage": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AwdStudio\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AwdStudio\\Tests\\": "tests"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Anton Karpov",
+            "email": "awd.com.ua@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable"
+}
