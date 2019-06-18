@@ -15,7 +15,8 @@ final class Registry implements ServiceRegistry
      */
     public function register(string $serviceName): ServiceHolder
     {
-        $this->registry[] = $serviceHolder;
+        $serviceHolder = new Holder($serviceName);
+        $this->registry[$serviceHolder->id()] = $serviceHolder;
 
         return $serviceHolder;
     }
