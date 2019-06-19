@@ -2,19 +2,19 @@
 
 namespace AwdStudio\Tests\DI\Unit\Reflection\TypeHandler;
 
-use AwdStudio\DI\Reflection\TypeHandler\FunctionTypeHandler;
+use AwdStudio\DI\Reflection\TypeHandler\StaticTypeHandler;
 use AwdStudio\DI\Storage\ServiceHolder;
 use AwdStudio\Tests\Mock\MockServiceHolder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \AwdStudio\DI\Reflection\TypeHandler\FunctionTypeHandler
+ * @coversDefaultClass \AwdStudio\DI\Reflection\TypeHandler\StaticTypeHandler
  */
-class FunctionHandlerTest extends TestCase
+class StaticTypeHandlerTest extends TestCase
 {
 
     /**
-     * @covers ::isAppropriate
+     * @covers       ::isAppropriate
      * @dataProvider appropriationDataProvider
      */
     public function testIsAppropriate(int $type, bool $value)
@@ -26,13 +26,13 @@ class FunctionHandlerTest extends TestCase
             ->willReturn($type);
 
         /** @var \AwdStudio\DI\Storage\ServiceHolder $serviceHolder */
-        $this->assertEquals($value, FunctionTypeHandler::isAppropriate($serviceHolder));
+        $this->assertEquals($value, StaticTypeHandler::isAppropriate($serviceHolder));
     }
 
     public function appropriationDataProvider()
     {
         return [
-            [ServiceHolder::TYPE_FUNCTION, true],
+            [ServiceHolder::TYPE_STATIC, true],
             [42, false],
         ];
     }

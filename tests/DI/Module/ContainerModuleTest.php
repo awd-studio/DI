@@ -4,11 +4,12 @@ namespace AwdStudio\Tests\DI\Module;
 
 use AwdStudio\DI\Exception\ServiceNotDefined;
 use AwdStudio\Tests\DI\Module\DI\DumpContainerWithServices;
-use AwdStudio\Tests\DI\Module\Services\DumpService;
-use AwdStudio\Tests\DI\Module\Services\DumpServiceWithName;
-use AwdStudio\Tests\DI\Module\Services\DumpServiceWithArgument;
+use AwdStudio\Tests\DI\Module\Services\DummyService;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceForFactory;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithName;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgument;
 use AwdStudio\Tests\DI\Module\Services\DumpServiceWithNamedArgument;
-use AwdStudio\Tests\DI\Module\Services\DumpServiceWithAutowiredArguments;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithAutowiredArguments;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -52,9 +53,9 @@ class ContainerModuleTest extends TestCase
      */
     public function testGetByClassName()
     {
-        $service = $this->instance->get(DumpService::class);
+        $service = $this->instance->get(DummyService::class);
 
-        $this->assertInstanceOf(DumpService::class, $service);
+        $this->assertInstanceOf(DummyService::class, $service);
     }
 
     /**
@@ -62,9 +63,9 @@ class ContainerModuleTest extends TestCase
      */
     public function testGetByServiceName()
     {
-        $service = $this->instance->get(DumpServiceWithName::name);
+        $service = $this->instance->get(DummyServiceWithName::name);
 
-        $this->assertInstanceOf(DumpServiceWithName::class, $service);
+        $this->assertInstanceOf(DummyServiceWithName::class, $service);
     }
 
     /**
@@ -72,9 +73,9 @@ class ContainerModuleTest extends TestCase
      */
     public function testGetServiceWithArgument()
     {
-        $service = $this->instance->get(DumpServiceWithArgument::class);
+        $service = $this->instance->get(DummyServiceWithArgument::class);
 
-        $this->assertInstanceOf(DumpServiceWithArgument::class, $service);
+        $this->assertInstanceOf(DummyServiceWithArgument::class, $service);
     }
 
     /**
@@ -92,9 +93,19 @@ class ContainerModuleTest extends TestCase
      */
     public function testGetServiceWithAutowiredArgument()
     {
-        $service = $this->instance->get(DumpServiceWithAutowiredArguments::class);
+        $service = $this->instance->get(DummyServiceWithAutowiredArguments::class);
 
-        $this->assertInstanceOf(DumpServiceWithAutowiredArguments::class, $service);
+        $this->assertInstanceOf(DummyServiceWithAutowiredArguments::class, $service);
+    }
+
+    /**
+     * @covers ::get
+     */
+    public function testGetServiceWithFactory()
+    {
+        $service = $this->instance->get(DummyServiceForFactory::class);
+
+        $this->assertInstanceOf(DummyServiceForFactory::class, $service);
     }
 
     /**
@@ -122,7 +133,7 @@ class ContainerModuleTest extends TestCase
      */
     public function testHasByClassName()
     {
-        $this->assertTrue($this->instance->has(DumpService::class));
+        $this->assertTrue($this->instance->has(DummyService::class));
         $this->assertFalse($this->instance->has(\stdClass::class));
     }
 
@@ -131,7 +142,7 @@ class ContainerModuleTest extends TestCase
      */
     public function testHasByServiceName()
     {
-        $this->assertTrue($this->instance->has(DumpServiceWithName::name));
+        $this->assertTrue($this->instance->has(DummyServiceWithName::name));
         $this->assertFalse($this->instance->has('undefined.service'));
     }
 

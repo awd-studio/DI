@@ -7,15 +7,15 @@ namespace AwdStudio\Tests\DI\Module\Services;
 class DumpServiceWithNamedArgument
 {
 
-    /** @var \AwdStudio\Tests\DI\Module\Services\DumpServiceWithName */
+    /** @var \AwdStudio\Tests\DI\Module\Services\DummyServiceWithName */
     private $argument;
 
     /**
      * DumpService3 constructor.
      *
-     * @param \AwdStudio\Tests\DI\Module\Services\DumpServiceWithName $argument
+     * @param \AwdStudio\Tests\DI\Module\Services\DummyServiceWithName $argument
      */
-    public function __construct(DumpServiceWithName $argument)
+    public function __construct(DummyServiceWithName $argument)
     {
         $this->argument = $argument;
     }

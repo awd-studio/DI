@@ -16,10 +16,17 @@ final class Holder implements ServiceHolder
     /** @var string */
     private $factory;
 
+    /** @var string */
+    private $factoryMethod;
+
+    /** @var array */
+    private $factoryArguments = [];
+
     /** @var array */
     private $arguments = [];
 
-    public function __construct(string $name) {
+    public function __construct(string $name)
+    {
         $this->name = $name;
         $this->class = $name;
     }
@@ -37,7 +44,7 @@ final class Holder implements ServiceHolder
      */
     public function type(): int
     {
-        if (NULL !== $this->factory) {
+        if (null !== $this->factory) {
             return ServiceHolder::TYPE_FACTORY;
         }
 
@@ -76,6 +83,34 @@ final class Holder implements ServiceHolder
     public function readArguments(): array
     {
         return $this->arguments;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function readFactory(): string
+    {
+        return $this->factory;
+    }
+
+    /**
+     * Returns the factory building method name.
+     *
+     * @return string
+     */
+    public function readFactoryMethod(): string
+    {
+        return $this->factoryMethod;
+    }
+
+    /**
+     * Returns the list of defined arguments for a factory's method.
+     *
+     * @return array
+     */
+    public function readFactoryArguments(): array
+    {
+        return $this->factoryArguments;
     }
 
     /**
@@ -118,7 +153,8 @@ final class Holder implements ServiceHolder
     public function factory(string $factoryClass, string $method, array $arguments = []): ServiceHolder
     {
         $this->factory = $factoryClass;
-        // ToDo
+        $this->factoryMethod = $method;
+        $this->factoryArguments = $arguments;
 
         return $this;
     }

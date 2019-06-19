@@ -80,4 +80,25 @@ interface ServiceHolder
      */
     public function readArguments(): array;
 
+    /**
+     * Returns the factory classname.
+     *
+     * @return string
+     */
+    public function readFactory(): string;
+
+    /**
+     * Returns the factory building method name.
+     *
+     * @return string
+     */
+    public function readFactoryMethod(): string;
+
+    /**
+     * Returns the list of defined arguments for a factory's method.
+     *
+     * @return array
+     */
+    public function readFactoryArguments(): array;
+
 }

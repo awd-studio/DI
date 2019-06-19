@@ -58,3 +58,8 @@ $registry->register(MyService1::class)
          })
          ->arguments(['My argument']);
 ```
+
+## Testing:
+```bash
+composer test
+```

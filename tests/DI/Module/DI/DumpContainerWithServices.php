@@ -6,11 +6,13 @@ namespace AwdStudio\Tests\DI\Module\DI;
 
 use AwdStudio\DI\ContainerFactory;
 use AwdStudio\DI\Storage\Registry;
-use AwdStudio\Tests\DI\Module\Services\DumpService;
-use AwdStudio\Tests\DI\Module\Services\DumpServiceWithName;
-use AwdStudio\Tests\DI\Module\Services\DumpServiceWithArgument;
+use AwdStudio\Tests\DI\Module\Services\DummyService;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceFactory;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceForFactory;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithName;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgument;
 use AwdStudio\Tests\DI\Module\Services\DumpServiceWithNamedArgument;
-use AwdStudio\Tests\DI\Module\Services\DumpServiceWithAutowiredArguments;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithAutowiredArguments;
 
 final class DumpContainerWithServices
 {
@@ -35,22 +37,26 @@ final class DumpContainerWithServices
     private function registerServices()
     {
         $this->registry
-            ->register(DumpService::class);
+            ->register(DummyService::class);
 
         $this->registry
-            ->register(DumpServiceWithName::name)
-            ->class(DumpServiceWithName::class);
+            ->register(DummyServiceWithName::name)
+            ->class(DummyServiceWithName::class);
 
         $this->registry
-            ->register(DumpServiceWithArgument::class)
-            ->arguments([DumpService::class]);
+            ->register(DummyServiceWithArgument::class)
+            ->arguments([DummyService::class]);
 
         $this->registry
             ->register(DumpServiceWithNamedArgument::class)
-            ->arguments(['@' . DumpServiceWithName::name]);
+            ->arguments(['@' . DummyServiceWithName::name]);
 
         $this->registry
-            ->register(DumpServiceWithAutowiredArguments::class);
+            ->register(DummyServiceWithAutowiredArguments::class);
+
+        $this->registry
+            ->register(DummyServiceForFactory::class)
+            ->factory(DummyServiceFactory::class, 'build');
     }
 
 }

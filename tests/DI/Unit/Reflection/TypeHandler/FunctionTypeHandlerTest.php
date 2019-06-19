@@ -2,15 +2,15 @@
 
 namespace AwdStudio\Tests\DI\Unit\Reflection\TypeHandler;
 
-use AwdStudio\DI\Reflection\TypeHandler\FactoryTypeHandler;
+use AwdStudio\DI\Reflection\TypeHandler\FunctionTypeHandler;
 use AwdStudio\DI\Storage\ServiceHolder;
 use AwdStudio\Tests\Mock\MockServiceHolder;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @coversDefaultClass \AwdStudio\DI\Reflection\TypeHandler\FactoryTypeHandler
+ * @coversDefaultClass \AwdStudio\DI\Reflection\TypeHandler\FunctionTypeHandler
  */
-class FactoryHandlerTest extends TestCase
+class FunctionTypeHandlerTest extends TestCase
 {
 
     /**
@@ -26,13 +26,13 @@ class FactoryHandlerTest extends TestCase
             ->willReturn($type);
 
         /** @var \AwdStudio\DI\Storage\ServiceHolder $serviceHolder */
-        $this->assertEquals($value, FactoryTypeHandler::isAppropriate($serviceHolder));
+        $this->assertEquals($value, FunctionTypeHandler::isAppropriate($serviceHolder));
     }
 
     public function appropriationDataProvider()
     {
         return [
-            [ServiceHolder::TYPE_FACTORY, true],
+            [ServiceHolder::TYPE_FUNCTION, true],
             [42, false],
         ];
     }

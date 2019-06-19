@@ -5,7 +5,6 @@ namespace AwdStudio\Tests\DI\Unit\Reflection\TypeHandler;
 use AwdStudio\DI\Exception\ServiceRunException;
 use AwdStudio\DI\Reflection\TypeHandler\ConstructorTypeHandler;
 use AwdStudio\DI\Storage\ServiceHolder;
-use AwdStudio\Tests\Mock\MockArgumentResolver;
 use AwdStudio\Tests\Mock\MockContainer;
 use AwdStudio\Tests\Mock\MockServiceHolder;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -14,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @coversDefaultClass \AwdStudio\DI\Reflection\TypeHandler\ConstructorTypeHandler
  */
-class ConstructorHandlerTest extends TestCase
+class ConstructorTypeHandlerTest extends TestCase
 {
 
     /**
@@ -86,6 +85,11 @@ class ConstructorHandlerTest extends TestCase
     private function getServiceHolder(): MockObject
     {
         $serviceHolder = MockServiceHolder::getMock($this);
+
+        $serviceHolder
+            ->expects($this->any())
+            ->method('type')
+            ->willReturn(ServiceHolder::TYPE_CONSTRUCTOR);
 
         $serviceHolder
             ->expects($this->any())
