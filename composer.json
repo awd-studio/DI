@@ -11,7 +11,8 @@
         "phpunit/php-code-coverage": "^7.0",
         "dg/bypass-finals": "^1.1",
         "phpstan/phpstan": "^0.11.8",
-        "phpstan/phpstan-phpunit": "^0.11.2"
+        "phpstan/phpstan-phpunit": "^0.11.2",
+        "php-coveralls/php-coveralls": "^2.1"
     },
     "autoload": {
         "psr-4": {
