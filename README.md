@@ -1,3 +1,7 @@
+# Simple implementation of the Dependency Injection container
+
+[![Build Status](https://travis-ci.org/awd-studio/DI.svg?branch=master)](https://travis-ci.org/awd-studio/DI)
+[![Coverage Status](https://coveralls.io/repos/github/awd-studio/DI/badge.svg)](https://coveralls.io/github/awd-studio/DI)
 
 ## Usage:
 
