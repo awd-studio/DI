@@ -49,10 +49,7 @@ class ConstructorHandlerTest extends TestCase
     {
         $this->expectException(ServiceRunException::class);
 
-        $argumentResolver = MockArgumentResolver::getMock($this);
-
-        /** @var \AwdStudio\DI\Argument\ArgumentResolver $argumentResolver */
-        $instance = new ConstructorTypeHandler($argumentResolver);
+        $instance = new ConstructorTypeHandler();
         $container = MockContainer::getMock($this);
         $serviceHolder = MockServiceHolder::getMock($this);
         $serviceHolder
@@ -73,10 +70,7 @@ class ConstructorHandlerTest extends TestCase
      */
     public function testHandle()
     {
-        $argumentResolver = MockArgumentResolver::getMock($this);
-
-        /** @var \AwdStudio\DI\Argument\ArgumentResolver $argumentResolver */
-        $instance = new ConstructorTypeHandler($argumentResolver);
+        $instance = new ConstructorTypeHandler();
         $container = MockContainer::getMock($this);
         $serviceHolder = $this->getServiceHolder();
 

@@ -20,7 +20,7 @@ abstract class TypeHandler
      */
     protected function prepareArguments(array $definedArgs, ?\ReflectionFunctionAbstract $method): array
     {
-        return \array_replace($this->requiredArguments($method), $definedArgs);
+        return \array_replace($this->requiredArguments($method), $definedArgs) ?? [];
     }
 
     /**

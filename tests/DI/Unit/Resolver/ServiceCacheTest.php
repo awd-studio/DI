@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * @coversDefaultClass \AwdStudio\DI\Resolver\Cache
  */
-class CacheTest extends TestCase
+class ServiceCacheTest extends TestCase
 {
 
     /**
