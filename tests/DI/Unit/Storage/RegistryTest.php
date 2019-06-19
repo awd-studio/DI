@@ -1,6 +1,6 @@
 <?php
 
-namespace AwdStudio\Tests\DI\Storage;
+namespace AwdStudio\Tests\DI\Unit\Storage;
 
 use AwdStudio\DI\Storage\Registry;
 use AwdStudio\DI\Storage\ServiceHolder;
