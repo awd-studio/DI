@@ -133,7 +133,7 @@ class FactoryTypeHandlerTest extends TestCase
         $serviceHolder
             ->expects($this->any())
             ->method('readFactoryArguments')
-            ->willReturn([]);
+            ->willReturn(['']);
 
         return $serviceHolder;
     }

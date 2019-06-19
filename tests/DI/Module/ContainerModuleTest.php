@@ -70,6 +70,10 @@ class ContainerModuleTest extends TestCase
 
     /**
      * @covers ::get
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::prepareArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::resolveArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::requiredArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::parameterType
      */
     public function testGetServiceWithArgument()
     {
@@ -80,6 +84,10 @@ class ContainerModuleTest extends TestCase
 
     /**
      * @covers ::get
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::prepareArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::resolveArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::requiredArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::parameterType
      */
     public function testGetServiceWithNamedArgument()
     {
@@ -90,6 +98,10 @@ class ContainerModuleTest extends TestCase
 
     /**
      * @covers ::get
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::prepareArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::resolveArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::requiredArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::parameterType
      */
     public function testGetServiceWithAutowiredArgument()
     {
@@ -100,6 +112,10 @@ class ContainerModuleTest extends TestCase
 
     /**
      * @covers ::get
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::prepareArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::resolveArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::requiredArguments
+     * @covers \AwdStudio\DI\Reflection\TypeHandler\TypeHandler::parameterType
      */
     public function testGetServiceWithFactory()
     {

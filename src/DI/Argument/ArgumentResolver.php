@@ -10,11 +10,11 @@ final class ArgumentResolver
     /**
      * Resolves the particular argument type.
      *
-     * @param string $argumentId
+     * @param mixed $argumentId
      *
-     * @return string
+     * @return mixed
      */
-    public function resolve(string $argumentId): string
+    public function resolve($argumentId)
     {
         /** @var \AwdStudio\DI\Argument\Argument $resolverClass */
         foreach ($this->resolversList() as $resolverClass) {
