@@ -1,0 +1,8 @@
+includes:
+	- vendor/phpstan/phpstan-phpunit/extension.neon
+
+parameters:
+	ignoreErrors:
+		-
+			message: '#[a-zA-Z0-9\\_\#\$\\s]\MockObject\s+given.#'
+			path: %currentWorkingDirectory%/tests/*

@@ -9,7 +9,9 @@
     "require-dev": {
         "phpunit/phpunit": "^8.1",
         "phpunit/php-code-coverage": "^7.0",
-        "dg/bypass-finals": "^1.1"
+        "dg/bypass-finals": "^1.1",
+        "phpstan/phpstan": "^0.11.8",
+        "phpstan/phpstan-phpunit": "^0.11.2"
     },
     "autoload": {
         "psr-4": {
@@ -28,5 +30,11 @@
             "email": "awd.com.ua@gmail.com"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "scripts":
+    {
+        "phpstan": "phpstan analyse --level=7 --configuration=phpstan.neon src tests",
+        "phpunit": "phpunit -c phpunit.xml.dist",
+        "test": [ "@phpstan", "@phpunit" ]
+    }
 }
