@@ -7,9 +7,6 @@ namespace AwdStudio\DI\Storage;
 final class Holder implements ServiceHolder
 {
 
-    /** @var int */
-    private $serviceType;
-
     /** @var string */
     private $name;
 
@@ -19,24 +16,12 @@ final class Holder implements ServiceHolder
     /** @var string */
     private $factory;
 
-    /** @var string */
-    private $method;
-
     /** @var array */
-    private $arguments;
+    private $arguments = [];
 
-    public function __construct(
-        string $name,
-        ?string $class = null,
-        ?string $factory = null,
-        ?string $method = null,
-        array $arguments = []
-    ) {
+    public function __construct(string $name) {
         $this->name = $name;
-        $this->class = $class;
-        $this->factory = $factory;
-        $this->method = $method;
-        $this->arguments = $arguments;
+        $this->class = $name;
     }
 
     /**
@@ -52,7 +37,21 @@ final class Holder implements ServiceHolder
      */
     public function type(): int
     {
-        return $this->serviceType;
+        if (NULL !== $this->factory) {
+            return ServiceHolder::TYPE_FACTORY;
+        }
+
+        // ToDo
+        // if () {
+        //     return ServiceHolder::TYPE_STATIC;
+        // }
+
+        // ToDo
+        // if () {
+        //     return ServiceHolder::TYPE_FUNCTION;
+        // }
+
+        return ServiceHolder::TYPE_CONSTRUCTOR;
     }
 
     /**
@@ -68,7 +67,7 @@ final class Holder implements ServiceHolder
      */
     public function readClass(): string
     {
-        // TODO: Implement getClass() method.
+        return $this->class ?? $this->name;
     }
 
     /**
@@ -76,7 +75,7 @@ final class Holder implements ServiceHolder
      */
     public function readArguments(): array
     {
-        // TODO: Implement getArguments() method.
+        return $this->arguments;
     }
 
     /**
@@ -88,7 +87,9 @@ final class Holder implements ServiceHolder
      */
     public function class(string $className): ServiceHolder
     {
-        // TODO: Implement class() method.
+        $this->class = $className;
+
+        return $this;
     }
 
     /**
@@ -100,7 +101,9 @@ final class Holder implements ServiceHolder
      */
     public function arguments(array $arguments): ServiceHolder
     {
-        // TODO: Implement arguments() method.
+        $this->arguments = $arguments;
+
+        return $this;
     }
 
     /**
@@ -114,7 +117,10 @@ final class Holder implements ServiceHolder
      */
     public function factory(string $factoryClass, string $method, array $arguments = []): ServiceHolder
     {
-        // TODO: Implement factory() method.
+        $this->factory = $factoryClass;
+        // ToDo
+
+        return $this;
     }
 
 }
