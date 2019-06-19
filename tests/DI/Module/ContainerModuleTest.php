@@ -3,14 +3,12 @@
 namespace AwdStudio\Tests\DI\Module;
 
 use AwdStudio\DI\Exception\ServiceNotDefined;
-use AwdStudio\DI\Exception\ServiceRunException;
 use AwdStudio\Tests\DI\Module\DI\DumpContainerWithServices;
 use AwdStudio\Tests\DI\Module\Services\DumpService;
 use AwdStudio\Tests\DI\Module\Services\DumpServiceWithName;
 use AwdStudio\Tests\DI\Module\Services\DumpServiceWithArgument;
 use AwdStudio\Tests\DI\Module\Services\DumpServiceWithNamedArgument;
 use AwdStudio\Tests\DI\Module\Services\DumpServiceWithAutowiredArguments;
-use AwdStudio\Tests\DI\Module\Services\DumpService6;
 use PHPUnit\Framework\TestCase;
 
 /**
