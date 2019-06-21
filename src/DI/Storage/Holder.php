@@ -16,6 +16,9 @@ final class Holder implements ServiceHolder
     /** @var string */
     private $factory;
 
+    /** @var callable */
+    private $callableFactory;
+
     /** @var string */
     private $factoryMethod;
 
@@ -41,6 +44,8 @@ final class Holder implements ServiceHolder
 
     /**
      * {@inheritDoc}
+     *
+     * @todo Provide the checker to disallow cross-typing.
      */
     public function type(): int
     {
@@ -48,15 +53,10 @@ final class Holder implements ServiceHolder
             return ServiceHolder::TYPE_FACTORY;
         }
 
-        // ToDo
-        // if () {
-        //     return ServiceHolder::TYPE_STATIC;
-        // }
+        if (null !== $this->callableFactory) {
+            return ServiceHolder::TYPE_CALLABLE;
+        }
 
-        // ToDo
-        // if () {
-        //     return ServiceHolder::TYPE_FUNCTION;
-        // }
 
         return ServiceHolder::TYPE_CONSTRUCTOR;
     }
@@ -104,9 +104,7 @@ final class Holder implements ServiceHolder
     }
 
     /**
-     * Returns the list of defined arguments for a factory's method.
-     *
-     * @return array
+     * {@inheritDoc}
      */
     public function readFactoryArguments(): array
     {
@@ -114,11 +112,17 @@ final class Holder implements ServiceHolder
     }
 
     /**
-     * Registers the class which the service provides.
+     * Returns the callable factory.
      *
-     * @param string $className Full class name with a namespace.
-     *
-     * @return \AwdStudio\DI\Storage\ServiceHolder
+     * @return callable
+     */
+    public function readCallableFactory(): callable
+    {
+        return $this->callableFactory;
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function class(string $className): ServiceHolder
     {
@@ -128,11 +132,7 @@ final class Holder implements ServiceHolder
     }
 
     /**
-     * Registers the list of parameters to add to the constructor.
-     *
-     * @param array $arguments A list of arguments to instantiate the service with.
-     *
-     * @return \AwdStudio\DI\Storage\ServiceHolder
+     * {@inheritDoc}
      */
     public function arguments(array $arguments): ServiceHolder
     {
@@ -142,19 +142,23 @@ final class Holder implements ServiceHolder
     }
 
     /**
-     * Registers the factory that need to call to instantiate the service.
-     *
-     * @param string $factoryClass Full class name with a namespace.
-     * @param string $method       The method which builds the service.
-     * @param array  $arguments    Arguments for the factory method.
-     *
-     * @return \AwdStudio\DI\Storage\ServiceHolder
+     * {@inheritDoc}
      */
     public function factory(string $factoryClass, string $method, array $arguments = []): ServiceHolder
     {
         $this->factory = $factoryClass;
         $this->factoryMethod = $method;
         $this->factoryArguments = $arguments;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function fromCallable(callable $callableFactory): ServiceHolder
+    {
+        $this->callableFactory = $callableFactory;
 
         return $this;
     }

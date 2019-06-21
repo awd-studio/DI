@@ -4,7 +4,7 @@ declare(strict_types=1); // strict mode
 
 namespace AwdStudio\Tests\DI\Module\Services;
 
-class DumpServiceWithNamedArgument
+class DummyServiceWithNamedArgument
 {
 
     /** @var \AwdStudio\Tests\DI\Module\Services\DummyServiceWithName */

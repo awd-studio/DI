@@ -8,11 +8,16 @@ use AwdStudio\DI\ContainerFactory;
 use AwdStudio\DI\Storage\Registry;
 use AwdStudio\Tests\DI\Module\Services\DummyService;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceFactory;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceFactoryForCallableStatic;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceForCallableWithArray;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceForCallableWithStaticMethodString;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceForFactory;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgumentFroCallable;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithName;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgument;
-use AwdStudio\Tests\DI\Module\Services\DumpServiceWithNamedArgument;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithNamedArgument;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithAutowiredArguments;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithNameForCallable;
 
 final class DumpContainerWithServices
 {
@@ -36,6 +41,9 @@ final class DumpContainerWithServices
 
     private function registerServices()
     {
+        // Include functions pack
+        require_once __DIR__ . '/../Services/common.php';
+
         $this->registry
             ->register(DummyService::class);
 
@@ -48,7 +56,7 @@ final class DumpContainerWithServices
             ->arguments([DummyService::class]);
 
         $this->registry
-            ->register(DumpServiceWithNamedArgument::class)
+            ->register(DummyServiceWithNamedArgument::class)
             ->arguments(['@' . DummyServiceWithName::name]);
 
         $this->registry
@@ -56,7 +64,29 @@ final class DumpContainerWithServices
 
         $this->registry
             ->register(DummyServiceForFactory::class)
-            ->factory(DummyServiceFactory::class, 'build');
+            ->factory(DummyServiceFactory::class, DummyServiceFactory::FACTORY_METHOD_NAME);
+
+        $this->registry
+            ->register(DummyServiceWithNameForCallable::name)
+            ->class(DummyServiceWithNameForCallable::class)
+            ->fromCallable('dummyFunctionFactory');
+
+        $this->registry
+            ->register(DummyServiceWithNameForCallable::name)
+            ->class(DummyServiceWithNameForCallable::class)
+            ->fromCallable('\AwdStudio\Tests\DI\Module\Services\dummyFunctionFactory');
+
+        $this->registry
+            ->register(DummyServiceWithArgumentFroCallable::class)
+            ->fromCallable('\AwdStudio\Tests\DI\Module\Services\dummyFunctionFactoryWithArguments');
+
+        $this->registry
+            ->register(DummyServiceForCallableWithArray::class)
+            ->fromCallable([
+                DummyServiceFactoryForCallableStatic::class,
+                DummyServiceFactoryForCallableStatic::FACTORY_METHOD_NAME,
+            ]);
+
     }
 
 }

@@ -9,8 +9,7 @@ interface ServiceHolder
 
     const TYPE_CONSTRUCTOR = 0;
     const TYPE_FACTORY = 1;
-    const TYPE_STATIC = 2;
-    const TYPE_FUNCTION = 3;
+    const TYPE_CALLABLE = 2;
 
     /**
      * Registers the class which the service provides.
@@ -31,7 +30,7 @@ interface ServiceHolder
     public function arguments(array $arguments): self;
 
     /**
-     * Registers the factory that need to call to instantiate the service.
+     * Registers the factory class that needs to be called to call to instantiate a service.
      *
      * @param string $factoryClass Full class name with a namespace.
      * @param string $method       The method which builds the service.
@@ -40,6 +39,15 @@ interface ServiceHolder
      * @return \AwdStudio\DI\Storage\ServiceHolder
      */
     public function factory(string $factoryClass, string $method, array $arguments = []): self;
+
+    /**
+     * Registers the callable factory that needs to be called to instantiate a service.
+     *
+     * @param callable $callableFactory
+     *
+     * @return \AwdStudio\DI\Storage\ServiceHolder
+     */
+    public function fromCallable(callable $callableFactory): self;
 
     /**
      * Returns the ID of the service.
@@ -100,5 +108,12 @@ interface ServiceHolder
      * @return array
      */
     public function readFactoryArguments(): array;
+
+    /**
+     * Returns the callable factory.
+     *
+     * @return callable
+     */
+    public function readCallableFactory(): callable;
 
 }
