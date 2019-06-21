@@ -96,6 +96,17 @@ class HolderTest extends TestCase
     }
 
     /**
+     * @covers ::readCallableFactory
+     */
+    public function testReadCallableFactory()
+    {
+        $this->instance->fromCallable('phpinfo');
+
+        $callableFactory = $this->instance->readCallableFactory();
+        $this->assertTrue(\is_callable($callableFactory));
+    }
+
+    /**
      * @covers ::arguments
      */
     public function testArguments()
@@ -141,6 +152,16 @@ class HolderTest extends TestCase
     public function testClass()
     {
         $holder = $this->instance->class(\stdClass::class);
+
+        $this->assertInstanceOf(ServiceHolder::class, $holder);
+    }
+
+    /**
+     * @covers ::fromCallable
+     */
+    public function testFromCallable()
+    {
+        $holder = $this->instance->fromCallable('phpinfo');
 
         $this->assertInstanceOf(ServiceHolder::class, $holder);
     }

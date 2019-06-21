@@ -5,6 +5,7 @@ declare(strict_types=1); // strict mode
 namespace AwdStudio\DI\Reflection\TypeHandler;
 
 use AwdStudio\DI\DIContainer;
+use AwdStudio\DI\Exception\ServiceRunException;
 use AwdStudio\DI\Storage\ServiceHolder;
 
 abstract class TypeHandler
@@ -61,6 +62,24 @@ abstract class TypeHandler
     }
 
     /**
+     * Handles the service.
+     *
+     * @param \AwdStudio\DI\Storage\ServiceHolder $serviceHolder
+     * @param \AwdStudio\DI\DIContainer           $container
+     *
+     * @return mixed
+     * @throws \AwdStudio\DI\Exception\ServiceRunException
+     */
+    public function handle(ServiceHolder $serviceHolder, DIContainer $container)
+    {
+        try {
+            return $this->buildService($serviceHolder, $container);
+        } catch (\ReflectionException $exception) {
+            throw new ServiceRunException($exception->getMessage());
+        }
+    }
+
+    /**
      * Checks if the handler is appropriate for a service holder.
      *
      * @param \AwdStudio\DI\Storage\ServiceHolder $serviceHolder
@@ -70,15 +89,14 @@ abstract class TypeHandler
     abstract public static function isAppropriate(ServiceHolder $serviceHolder): bool;
 
     /**
-     * Handles the service.
+     * Builds the service from the reflection.
      *
      * @param \AwdStudio\DI\Storage\ServiceHolder $serviceHolder
      * @param \AwdStudio\DI\DIContainer           $container
      *
-     * @return mixed
-     * @throws \AwdStudio\DI\Exception\InvalidServiceDefinition
-     * @throws \AwdStudio\DI\Exception\ServiceRunException
+     * @return object
+     * @throws \ReflectionException
      */
-    abstract public function handle(ServiceHolder $serviceHolder, DIContainer $container);
+    abstract protected function buildService(ServiceHolder $serviceHolder, DIContainer $container);
 
 }

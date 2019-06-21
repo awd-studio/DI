@@ -5,7 +5,6 @@ declare(strict_types=1); // strict mode
 namespace AwdStudio\DI\Reflection\TypeHandler;
 
 use AwdStudio\DI\DIContainer;
-use AwdStudio\DI\Exception\ServiceRunException;
 use AwdStudio\DI\Storage\ServiceHolder;
 
 final class CallableTypeHandler extends TypeHandler
@@ -22,30 +21,11 @@ final class CallableTypeHandler extends TypeHandler
     /**
      * {@inheritDoc}
      */
-    public function handle(ServiceHolder $serviceHolder, DIContainer $container)
+    protected function buildService(ServiceHolder $serviceHolder, DIContainer $container)
     {
-        return $this->buildService($serviceHolder, $container);
-    }
+        $definedArgs = $serviceHolder->readArguments();
 
-    /**
-     * Builds the service from the reflection.
-     *
-     * @param \AwdStudio\DI\Storage\ServiceHolder $serviceHolder
-     * @param \AwdStudio\DI\DIContainer           $container
-     *
-     * @return object
-     * @throws \AwdStudio\DI\Exception\InvalidServiceDefinition
-     * @throws \AwdStudio\DI\Exception\ServiceRunException
-     */
-    private function buildService(ServiceHolder $serviceHolder, DIContainer $container)
-    {
-        try {
-            $definedArgs = $serviceHolder->readArguments();
-
-            return $this->resolveCallableByType($serviceHolder->readCallableFactory(), $definedArgs, $container);
-        } catch (\ReflectionException $exception) {
-            throw new ServiceRunException($exception->getMessage());
-        }
+        return $this->resolveCallableByType($serviceHolder->readCallableFactory(), $definedArgs, $container);
     }
 
     /**
