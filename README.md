@@ -1,7 +1,7 @@
 # Simple implementation of the Dependency Injection container
 
-[![Build Status](https://travis-ci.org/awd-studio/DI.svg?branch=master)](https://travis-ci.org/awd-studio/DI)
-[![Coverage Status](https://coveralls.io/repos/github/awd-studio/DI/badge.svg)](https://coveralls.io/github/awd-studio/DI)
+[![Build Status](https://travis-ci.org/awd-studio/di.svg?branch=master)](https://travis-ci.org/awd-studio/di)
+[![Coverage Status](https://coveralls.io/repos/github/awd-studio/DI/badge.svg?branch=master)](https://coveralls.io/github/awd-studio/DI?branch=master)
 
 ## Usage:
 
@@ -45,19 +45,25 @@ $container->has('@my.second.service');
 $container->get('@my.second.service');
 $container->get(MyService2::class);
 
-// ToDo: Add static factories
+// Factory method
+$registry->register(MyService1::class)
+         ->factory(MyStatic::class, 'factoryMethodName', [
+             'Simple Argument', 
+             '@my.second.service'
+         ]);
 
 // Static factory method
 $registry->register(MyService1::class)
-         ->function([MyStatic::class . '::build']);
+         ->fromCallable([MyStatic::class, 'build']);
+//         ->fromCallable(['\Full\Namespace\MyStatic', 'build']);
 
 // Common function
 $registry->register(MyService1::class)
-         ->function('callableFunction');
+         ->fromCallable('callableFunction');
          
 // Closure factory
 $registry->register(MyService1::class)
-         ->function(function ($arg) {
+         ->fromCallable(function ($arg) {
              return new MyService1($arg);
          })
          ->arguments(['My argument']);

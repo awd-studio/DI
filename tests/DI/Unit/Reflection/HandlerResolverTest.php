@@ -5,7 +5,7 @@ namespace AwdStudio\Tests\DI\Unit\Reflection;
 use AwdStudio\DI\Exception\UnknownServiceType;
 use AwdStudio\DI\Reflection\TypeHandler\ConstructorTypeHandler;
 use AwdStudio\DI\Reflection\TypeHandler\FactoryTypeHandler;
-use AwdStudio\DI\Reflection\TypeHandler\FunctionTypeHandler;
+use AwdStudio\DI\Reflection\TypeHandler\CallableTypeHandler;
 use AwdStudio\DI\Reflection\HandlerResolver;
 use AwdStudio\DI\Reflection\TypeHandler\StaticTypeHandler;
 use AwdStudio\DI\Storage\ServiceHolder;
@@ -24,8 +24,7 @@ class HandlerResolverTest extends TestCase
         return [
             [ServiceHolder::TYPE_CONSTRUCTOR, ConstructorTypeHandler::class],
             [ServiceHolder::TYPE_FACTORY, FactoryTypeHandler::class],
-            [ServiceHolder::TYPE_STATIC, StaticTypeHandler::class],
-            [ServiceHolder::TYPE_FUNCTION, FunctionTypeHandler::class],
+            [ServiceHolder::TYPE_CALLABLE, CallableTypeHandler::class],
         ];
     }
 

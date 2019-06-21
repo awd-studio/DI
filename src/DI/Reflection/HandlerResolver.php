@@ -8,9 +8,8 @@ use AwdStudio\DI\Argument\ArgumentResolver;
 use AwdStudio\DI\Exception\UnknownServiceType;
 use AwdStudio\DI\Reflection\TypeHandler\ConstructorTypeHandler;
 use AwdStudio\DI\Reflection\TypeHandler\FactoryTypeHandler;
-use AwdStudio\DI\Reflection\TypeHandler\FunctionTypeHandler;
+use AwdStudio\DI\Reflection\TypeHandler\CallableTypeHandler;
 use AwdStudio\DI\Reflection\TypeHandler\TypeHandler;
-use AwdStudio\DI\Reflection\TypeHandler\StaticTypeHandler;
 use AwdStudio\DI\Storage\ServiceHolder;
 
 final class HandlerResolver
@@ -54,8 +53,7 @@ final class HandlerResolver
     {
         yield ConstructorTypeHandler::class;
         yield FactoryTypeHandler::class;
-        yield StaticTypeHandler::class;
-        yield FunctionTypeHandler::class;
+        yield CallableTypeHandler::class;
     }
 
 }

@@ -4,5 +4,11 @@ includes:
 parameters:
 	ignoreErrors:
 		-
-			message: '#[a-zA-Z0-9\\_\#\$\\s]\MockObject\s+given.#'
+			message: '#.\MockObject\s+given#'
 			path: %currentWorkingDirectory%/tests/*
+		-
+			message: '#expects\s+callable\(\)\:\s+mixed#'
+			path: %currentWorkingDirectory%/tests/*
+		-
+			message: '#Function\s+#'
+			path: %currentWorkingDirectory%/tests/DI/Module/Services/common.php*

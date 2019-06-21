@@ -5,11 +5,15 @@ namespace AwdStudio\Tests\DI\Module;
 use AwdStudio\DI\Exception\ServiceNotDefined;
 use AwdStudio\Tests\DI\Module\DI\DumpContainerWithServices;
 use AwdStudio\Tests\DI\Module\Services\DummyService;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceForCallableWithArray;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceForCallableWithStaticMethodString;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceForFactory;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgumentFroCallable;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithName;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgument;
-use AwdStudio\Tests\DI\Module\Services\DumpServiceWithNamedArgument;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithNamedArgument;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithAutowiredArguments;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithNameForCallable;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -91,9 +95,9 @@ class ContainerModuleTest extends TestCase
      */
     public function testGetServiceWithNamedArgument()
     {
-        $service = $this->instance->get(DumpServiceWithNamedArgument::class);
+        $service = $this->instance->get(DummyServiceWithNamedArgument::class);
 
-        $this->assertInstanceOf(DumpServiceWithNamedArgument::class, $service);
+        $this->assertInstanceOf(DummyServiceWithNamedArgument::class, $service);
     }
 
     /**
@@ -122,6 +126,36 @@ class ContainerModuleTest extends TestCase
         $service = $this->instance->get(DummyServiceForFactory::class);
 
         $this->assertInstanceOf(DummyServiceForFactory::class, $service);
+    }
+
+    /**
+     * @covers ::get
+     */
+    public function testGetServiceFromCallableFactory()
+    {
+        $service = $this->instance->get(DummyServiceWithNameForCallable::name);
+        $this->assertInstanceOf(DummyServiceWithNameForCallable::class, $service);
+
+        $serviceNamespaced = $this->instance->get(DummyServiceWithNameForCallable::name);
+        $this->assertInstanceOf(DummyServiceWithNameForCallable::class, $serviceNamespaced);
+    }
+
+    /**
+     * @covers ::get
+     */
+    public function testGetServiceFromCallableFactoryWithArguments()
+    {
+        $service = $this->instance->get(DummyServiceWithArgumentFroCallable::class);
+        $this->assertInstanceOf(DummyServiceWithArgumentFroCallable::class, $service);
+
+        $serviceNamespaced = $this->instance->get(DummyServiceWithArgumentFroCallable::class);
+        $this->assertInstanceOf(DummyServiceWithArgumentFroCallable::class, $serviceNamespaced);
+    }
+
+    public function testGetServiceFromCallableByArray()
+    {
+        $service = $this->instance->get(DummyServiceForCallableWithArray::class);
+        $this->assertInstanceOf(DummyServiceForCallableWithArray::class, $service);
     }
 
     /**
