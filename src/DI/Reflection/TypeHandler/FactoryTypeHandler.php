@@ -23,17 +23,14 @@ final class FactoryTypeHandler extends TypeHandler
      */
     protected function buildService(ServiceHolder $serviceHolder, DIContainer $container)
     {
-        $factory = new \ReflectionClass($serviceHolder->readFactory());
+        $class = $serviceHolder->readFactory();
         $definedArgs = $serviceHolder->readArguments();
-        $factoryArguments = $this->prepareArguments($definedArgs, $factory->getConstructor());
-        $factoryClass = $factory->newInstanceArgs($factoryArguments);
+        $factoryClass = $this->resolveObjectConstructor($class, $definedArgs, $container);
 
-        $factoryMethod = $factory->getMethod($serviceHolder->readFactoryMethod());
-        $factoryMethodDefArgs = $serviceHolder->readFactoryArguments();
-        $factoryMethodArguments = $this->prepareArguments($factoryMethodDefArgs, $factoryMethod);
-        $resolvedArguments = $this->resolveArguments($factoryMethodArguments, $container);
+        $method = $serviceHolder->readFactoryMethod();
+        $definedArgs = $serviceHolder->readFactoryArguments();
 
-        return $factoryMethod->invokeArgs($factoryClass, $resolvedArguments);
+        return $this->resolveObjectMethod($factoryClass, $method, $definedArgs, $container);
     }
 
 }

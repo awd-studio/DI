@@ -66,8 +66,9 @@ class ConstructorTypeHandlerTest extends TestCase
     /**
      * @covers ::handle
      * @covers ::buildService
+     * @covers ::resolveObjectConstructor
      */
-    public function testHandle()
+    public function testBuildService()
     {
         $instance = new ConstructorTypeHandler();
         $container = MockContainer::getMock($this);

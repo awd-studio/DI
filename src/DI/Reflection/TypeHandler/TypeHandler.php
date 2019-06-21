@@ -62,6 +62,44 @@ abstract class TypeHandler
     }
 
     /**
+     * Resolves the class by reflection.
+     *
+     * @param mixed                     $class       Class to instantiate.
+     * @param array                     $definedArgs Default arguments that doesn't need to be resolved.
+     * @param \AwdStudio\DI\DIContainer $container   The container for arguments that need to be resolved.
+     *
+     * @return object
+     * @throws \ReflectionException
+     */
+    protected function resolveObjectConstructor($class, array $definedArgs, DIContainer $container)
+    {
+        $class = new \ReflectionClass($class);
+        $arguments = $this->prepareArguments($definedArgs, $class->getConstructor());
+
+        return $class->newInstanceArgs($this->resolveArguments($arguments, $container));
+    }
+
+    /**
+     * Resolves the method of an object by reflection.
+     *
+     * @param object                    $object      An instance of object that contains the method.
+     * @param string                    $method      The method's name.
+     * @param array                     $definedArgs Default arguments that doesn't need to be resolved.
+     * @param \AwdStudio\DI\DIContainer $container   The container for arguments that need to be resolved.
+     *
+     * @return mixed
+     * @throws \ReflectionException
+     */
+    protected function resolveObjectMethod($object, string $method, array $definedArgs, DIContainer $container)
+    {
+        $factoryMethod = new \ReflectionMethod($object, $method);
+        $factoryMethodArguments = $this->prepareArguments($definedArgs, $factoryMethod);
+        $resolvedArguments = $this->resolveArguments($factoryMethodArguments, $container);
+
+        return $factoryMethod->invokeArgs($object, $resolvedArguments);
+    }
+
+    /**
      * Handles the service.
      *
      * @param \AwdStudio\DI\Storage\ServiceHolder $serviceHolder
@@ -69,6 +107,7 @@ abstract class TypeHandler
      *
      * @return mixed
      * @throws \AwdStudio\DI\Exception\ServiceRunException
+     * @throws \AwdStudio\DI\Exception\InvalidServiceDefinition
      */
     public function handle(ServiceHolder $serviceHolder, DIContainer $container)
     {
@@ -96,6 +135,7 @@ abstract class TypeHandler
      *
      * @return object
      * @throws \ReflectionException
+     * @throws \AwdStudio\DI\Exception\InvalidServiceDefinition
      */
     abstract protected function buildService(ServiceHolder $serviceHolder, DIContainer $container);
 

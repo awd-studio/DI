@@ -122,7 +122,6 @@ class HolderTest extends TestCase
             [new Holder(\stdClass::class), ServiceHolder::TYPE_CONSTRUCTOR],
             [(new Holder(\stdClass::class))->factory('', '', []), ServiceHolder::TYPE_FACTORY],
             [(new Holder(\stdClass::class))->fromCallable(function () {}), ServiceHolder::TYPE_CALLABLE],
-            // ToDo: Add others variants of callable factories
         ];
     }
 

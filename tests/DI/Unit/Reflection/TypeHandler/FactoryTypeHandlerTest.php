@@ -43,8 +43,10 @@ class FactoryTypeHandlerTest extends TestCase
     /**
      * @covers ::handle
      * @covers ::buildService
+     * @covers ::resolveObjectConstructor
+     * @covers ::resolveObjectMethod
      */
-    public function testHandle()
+    public function testBuildService()
     {
         $instance = new FactoryTypeHandler();
         $container = MockContainer::getMock($this);

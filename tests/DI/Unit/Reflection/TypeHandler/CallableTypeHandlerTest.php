@@ -46,11 +46,11 @@ class CallableTypeHandlerTest extends TestCase
      * @covers ::resolveCallableByType
      * @covers ::resolveMethod
      * @covers ::resolveFunction
-     * @covers ::resolveFactoryObject
+     * @covers ::resolveObjectMethod
      *
      * @dataProvider serviceHolderDataProvider
      */
-    public function testHandle($serviceHolder, string $serviceInstanceType)
+    public function testBuildService($serviceHolder, string $serviceInstanceType)
     {
         $instance = new CallableTypeHandler();
         $container = MockContainer::getMock($this);

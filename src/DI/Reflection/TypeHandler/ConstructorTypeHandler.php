@@ -23,11 +23,10 @@ final class ConstructorTypeHandler extends TypeHandler
      */
     protected function buildService(ServiceHolder $serviceHolder, DIContainer $container)
     {
-        $class = new \ReflectionClass($serviceHolder->readClass());
+        $class = $serviceHolder->readClass();
         $definedArgs = $serviceHolder->readArguments();
-        $arguments = $this->prepareArguments($definedArgs, $class->getConstructor());
 
-        return $class->newInstanceArgs($this->resolveArguments($arguments, $container));
+        return $this->resolveObjectConstructor($class, $definedArgs, $container);
     }
 
 }

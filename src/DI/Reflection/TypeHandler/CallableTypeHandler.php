@@ -62,7 +62,7 @@ final class CallableTypeHandler extends TypeHandler
     {
         $reflection = new \ReflectionMethod($class, $name);
         $arguments = $this->prepareArguments($definedArgs, $reflection);
-        $object = $this->resolveFactoryObject($class, $container);
+        $object = $this->resolveObjectConstructor($class, [], $container);
 
         return $reflection->invokeArgs($object, $this->resolveArguments($arguments, $container));
     }
@@ -83,23 +83,6 @@ final class CallableTypeHandler extends TypeHandler
         $arguments = $this->prepareArguments($definedArgs, $reflection);
 
         return $reflection->invokeArgs($this->resolveArguments($arguments, $container));
-    }
-
-    /**
-     * Creates an instance of a class.
-     *
-     * @param string|object $class
-     * @param DIContainer   $container
-     *
-     * @return object
-     * @throws \ReflectionException
-     */
-    private function resolveFactoryObject($class, DIContainer $container)
-    {
-        $reflection = new \ReflectionClass($class);
-        $arguments = $this->prepareArguments([], $reflection->getConstructor());
-
-        return $reflection->newInstanceArgs($this->resolveArguments($arguments, $container));
     }
 
 }
