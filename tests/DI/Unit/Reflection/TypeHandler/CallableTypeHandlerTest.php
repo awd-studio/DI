@@ -74,7 +74,7 @@ class CallableTypeHandlerTest extends TestCase
         ];
     }
 
-    private function getLambdaCallableFactory(): array
+    private function getLambdaCallableFactory()
     {
         $serviceHolder = MockServiceHolder::getMock($this);
 
@@ -94,7 +94,7 @@ class CallableTypeHandlerTest extends TestCase
         return [$serviceHolder, $value];
     }
 
-    private function getArrayCallableDynamicFactory(): array
+    private function getArrayCallableDynamicFactory()
     {
         $serviceHolder = MockServiceHolder::getMock($this);
 
@@ -119,7 +119,7 @@ class CallableTypeHandlerTest extends TestCase
         return [$serviceHolder, $value];
     }
 
-    private function getArrayCallableDummyFactory(): array
+    private function getArrayCallableDummyFactory()
     {
         $serviceHolder = MockServiceHolder::getMock($this);
 
@@ -137,7 +137,7 @@ class CallableTypeHandlerTest extends TestCase
         return [$serviceHolder, $value];
     }
 
-    private function getArrayCallableStaticFactory(): array
+    private function getArrayCallableStaticFactory()
     {
         $serviceHolder = MockServiceHolder::getMock($this);
 
