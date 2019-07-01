@@ -36,7 +36,7 @@ final class Storage implements ServiceStorage
         $serviceName = $this->argumentResolver->resolve($id);
 
         /** @var \AwdStudio\DI\Storage\ServiceHolder $serviceHolder */
-        foreach ($this->registry->getIterator() as $serviceHolder) {
+        foreach ($this->registry as $serviceHolder) {
             if ($serviceHolder->isA($serviceName)) {
                 return $serviceHolder;
             }

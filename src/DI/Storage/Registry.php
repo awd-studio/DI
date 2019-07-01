@@ -24,7 +24,7 @@ final class Registry implements ServiceRegistry
     /**
      * {@inheritDoc}
      */
-    public function getIterator(): iterable
+    public function getIterator()
     {
         foreach ($this->registry as $serviceHolder) {
             yield $serviceHolder;

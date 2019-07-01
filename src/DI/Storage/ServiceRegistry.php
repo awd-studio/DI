@@ -4,7 +4,7 @@ declare(strict_types=1); // strict mode
 
 namespace AwdStudio\DI\Storage;
 
-interface ServiceRegistry
+interface ServiceRegistry extends \IteratorAggregate
 {
 
     /**
@@ -22,6 +22,6 @@ interface ServiceRegistry
      *
      * @return iterable
      */
-    public function getIterator(): iterable;
+    public function getIterator();
 
 }

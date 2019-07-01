@@ -4,6 +4,7 @@ namespace AwdStudio\Tests\DI\Unit\Storage;
 
 use AwdStudio\DI\Storage\Registry;
 use AwdStudio\DI\Storage\ServiceHolder;
+use AwdStudio\DI\Storage\ServiceRegistry;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -28,6 +29,12 @@ class RegistryTest extends TestCase
         parent::setUp();
 
         $this->instance = new Registry();
+    }
+
+    public function testInstance()
+    {
+        $this->assertInstanceOf(ServiceRegistry::class, $this->instance);
+        $this->assertInstanceOf(\IteratorAggregate::class, $this->instance);
     }
 
     /**
