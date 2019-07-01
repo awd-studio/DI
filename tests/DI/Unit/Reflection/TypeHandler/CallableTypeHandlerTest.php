@@ -74,7 +74,7 @@ class CallableTypeHandlerTest extends TestCase
         ];
     }
 
-    private function getLambdaCallableFactory()
+    private function getLambdaCallableFactory(): array
     {
         $serviceHolder = MockServiceHolder::getMock($this);
 
@@ -84,17 +84,16 @@ class CallableTypeHandlerTest extends TestCase
             ->willReturn(ServiceHolder::TYPE_CALLABLE);
 
         $value = \stdClass::class;
+        $closure = function () { return new \stdClass(); };
         $serviceHolder
             ->expects($this->any())
             ->method('readCallableFactory')
-            ->willReturn(function () {
-                return new \stdClass();
-            });
+            ->willReturn($closure);
 
         return [$serviceHolder, $value];
     }
 
-    private function getArrayCallableDynamicFactory()
+    private function getArrayCallableDynamicFactory(): array
     {
         $serviceHolder = MockServiceHolder::getMock($this);
 
@@ -119,7 +118,7 @@ class CallableTypeHandlerTest extends TestCase
         return [$serviceHolder, $value];
     }
 
-    private function getArrayCallableDummyFactory()
+    private function getArrayCallableDummyFactory(): array
     {
         $serviceHolder = MockServiceHolder::getMock($this);
 
@@ -132,12 +131,12 @@ class CallableTypeHandlerTest extends TestCase
         $serviceHolder
             ->expects($this->any())
             ->method('readCallableFactory')
-            ->willReturn([DummyServiceFactoryForCallable::class, DummyServiceFactoryForCallable::FACTORY_METHOD_NAME]);
+            ->willReturn([new DummyServiceFactoryForCallable(), DummyServiceFactoryForCallable::FACTORY_METHOD_NAME]);
 
         return [$serviceHolder, $value];
     }
 
-    private function getArrayCallableStaticFactory()
+    private function getArrayCallableStaticFactory(): array
     {
         $serviceHolder = MockServiceHolder::getMock($this);
 
