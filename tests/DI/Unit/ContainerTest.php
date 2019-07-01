@@ -100,4 +100,36 @@ class ContainerTest extends TestCase
         return [[$instance, $mockServiceStorage, $mockServiceResolver, $mockServiceHolder]];
     }
 
+    /**
+     * @covers ::findByTag
+     */
+    public function testFindByTag()
+    {
+        $mockServiceResolver = MockServiceResolver::getMock($this);
+        $mockServiceStorage = MockServiceStorage::getMock($this);
+        $mockServiceHolder = MockServiceHolder::getMock($this);
+
+        $mockServiceResolver
+            ->expects($this->any())
+            ->method('resolve')
+            ->willReturn(new \stdClass());
+
+        $mockServiceStorage
+            ->expects($this->any())
+            ->method('findByTag')
+            ->willReturn(new \ArrayIterator([$mockServiceHolder]));
+
+        /**
+         * @var ServiceStorage  $mockServiceStorage
+         * @var ServiceResolver $mockServiceResolver
+         */
+        $instance = new Container($mockServiceStorage, $mockServiceResolver);
+
+        $this->assertInstanceOf(\Traversable::class, $instance->findByTag('test.tag'));
+
+        foreach ($instance->findByTag('test.tag') as $serviceHolder) {
+            $this->assertInstanceOf(\stdClass::class, $serviceHolder);
+        }
+    }
+
 }

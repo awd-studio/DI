@@ -3,17 +3,20 @@
 namespace AwdStudio\Tests\DI\Module;
 
 use AwdStudio\DI\Exception\ServiceNotDefined;
-use AwdStudio\Tests\DI\Module\DI\DumpContainerWithServices;
+use AwdStudio\Tests\DI\Module\DI\DummyContainerWithServices;
 use AwdStudio\Tests\DI\Module\Services\DummyService;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceForCallableWithArray;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceForCallableWithStaticMethodString;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceForFactory;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceTaggable;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgumentFroCallable;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithName;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgument;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithNamedArgument;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithAutowiredArguments;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithNameForCallable;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithTagOne;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithTagTwo;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -21,7 +24,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @coversDefaultClass \AwdStudio\DI\Container
  *
- * @see \AwdStudio\Tests\DI\Module\DI\DumpContainerWithServices
+ * @see \AwdStudio\Tests\DI\Module\DI\DummyContainerWithServices
  */
 class ContainerModuleTest extends TestCase
 {
@@ -41,7 +44,7 @@ class ContainerModuleTest extends TestCase
     {
         parent::setUp();
 
-        $this->instance = (new DumpContainerWithServices())->container;
+        $this->instance = (new DummyContainerWithServices())->container;
     }
 
     /**
@@ -194,6 +197,25 @@ class ContainerModuleTest extends TestCase
     {
         $this->assertTrue($this->instance->has(DummyServiceWithName::name));
         $this->assertFalse($this->instance->has('undefined.service'));
+    }
+
+    /**
+     * @covers ::findByTag
+     */
+    public function testFindByTag()
+    {
+        foreach ($this->instance->findByTag(DummyServiceTaggable::TAG) as $priority => $service) {
+            $this->assertInstanceOf(DummyServiceTaggable::class, $service);
+
+            switch ($priority) {
+                case 0:
+                    $this->assertInstanceOf(DummyServiceWithTagTwo::class, $service);
+                    break;
+                case 1:
+                    $this->assertInstanceOf(DummyServiceWithTagOne::class, $service);
+                    break;
+            }
+        }
     }
 
 }

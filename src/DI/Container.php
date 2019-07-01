@@ -53,4 +53,14 @@ final class Container implements DIContainer
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function findByTag(string $tag): iterable
+    {
+        foreach ($this->storage->findByTag($tag) as $serviceHolder) {
+            yield $this->resolver->resolve($serviceHolder, $this);
+        }
+    }
+
 }

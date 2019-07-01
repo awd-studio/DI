@@ -12,14 +12,17 @@ use AwdStudio\Tests\DI\Module\Services\DummyServiceFactoryForCallableStatic;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceForCallableWithArray;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceForCallableWithStaticMethodString;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceForFactory;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceTaggable;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgumentFroCallable;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithName;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithArgument;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithNamedArgument;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithAutowiredArguments;
 use AwdStudio\Tests\DI\Module\Services\DummyServiceWithNameForCallable;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithTagOne;
+use AwdStudio\Tests\DI\Module\Services\DummyServiceWithTagTwo;
 
-final class DumpContainerWithServices
+final class DummyContainerWithServices
 {
 
     const SERVICE_WITH_ARGUMENTS = 'service.with.arguments';
@@ -87,6 +90,13 @@ final class DumpContainerWithServices
                 DummyServiceFactoryForCallableStatic::FACTORY_METHOD_NAME,
             ]);
 
+        $this->registry
+            ->register(DummyServiceWithTagOne::class);
+        $this->registry->tag(DummyServiceTaggable::TAG, DummyServiceWithTagOne::class, 2);
+
+        $this->registry
+            ->register(DummyServiceWithTagTwo::class);
+        $this->registry->tag(DummyServiceTaggable::TAG, DummyServiceWithTagTwo::class, 1);
     }
 
 }

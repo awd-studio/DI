@@ -6,4 +6,4 @@ namespace AwdStudio\DI;
 
 use Psr\Container\ContainerInterface;
 
-interface DIContainer extends ContainerInterface {}
+interface DIContainer extends ContainerInterface, TaggableContainer {}

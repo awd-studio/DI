@@ -29,6 +29,13 @@ $registry->register('my.second.service')
          ->class(MyService2::class)
          ->factory(MyService2Factory::class, 'build', []);
 
+// Add tagged services
+$service = MyService1::class;
+$serviceWeight = 25; // Set up service weight for custom sorting
+$registry->register($service);
+$registry->tag('my.tag', $service, $serviceWeight);
+
+
 // Service with arguments
 $registry->register('my.service')
          ->class(MyService2::class) // Service interface or class
