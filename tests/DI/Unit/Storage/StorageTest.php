@@ -138,4 +138,50 @@ class StorageTest extends TestCase
         $instance->find('undefined.service');
     }
 
+    /**
+     * @covers ::findByTag
+     */
+    public function testFindByTag()
+    {
+        $resolver = MockArgumentResolver::getMock($this);
+        $registry = MockServiceRegistry::getMock($this);
+        $holder = MockServiceHolder::getMock($this);
+
+        $holder
+            ->expects($this->any())
+            ->method('nameIs')
+            ->willReturn(true);
+
+        $service = new class {};
+        $serviceName = \get_class($service);
+
+        $resolver
+            ->expects($this->any())
+            ->method('resolve')
+            ->willReturn($serviceName);
+
+        $registry
+            ->expects($this->any())
+            ->method('getIterator')
+            ->willReturn(new \ArrayIterator([$holder]));
+
+        $registry
+            ->expects($this->any())
+            ->method('findByTag')
+            ->willReturn(new \ArrayIterator([$serviceName]));
+
+        /**
+         * @var \AwdStudio\DI\Argument\ArgumentResolver $resolver
+         * @var \AwdStudio\DI\Storage\ServiceRegistry   $registry
+         */
+        $instance = new Storage($resolver, $registry);
+
+        $this->assertInstanceOf(\Traversable::class, $instance->findByTag('tag.name'));
+
+        /** @var \Generator $byTag */
+        foreach ($instance->findByTag('test.tag') as $i => $result) {
+            $this->assertInstanceOf(ServiceHolder::class, $result);
+        }
+    }
+
 }

@@ -52,4 +52,14 @@ final class Storage implements ServiceStorage
         throw new ServiceNotDefined(\sprintf('The service "%s" was not registered', $id));
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function findByTag(string $tag): iterable
+    {
+        foreach ($this->registry->findByTag($tag) as $serviceId) {
+            yield $this->find($serviceId);
+        }
+    }
+
 }

@@ -24,4 +24,14 @@ interface ServiceStorage
      */
     public function find(string $id): ServiceHolder;
 
+    /**
+     * Finds service ID's by a tag.
+     *
+     * @param string $tag
+     *
+     * @return \AwdStudio\DI\Storage\ServiceHolder[]
+     * @throws \AwdStudio\DI\Exception\ServiceNotDefined
+     */
+    public function findByTag(string $tag): iterable;
+
 }
