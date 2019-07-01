@@ -37,7 +37,14 @@ final class Storage implements ServiceStorage
 
         /** @var \AwdStudio\DI\Storage\ServiceHolder $serviceHolder */
         foreach ($this->registry as $serviceHolder) {
-            if ($serviceHolder->isA($serviceName)) {
+            if ($serviceHolder->nameIs($serviceName)) {
+                return $serviceHolder;
+            }
+        }
+
+        /** @var \AwdStudio\DI\Storage\ServiceHolder $serviceHolder */
+        foreach ($this->registry as $serviceHolder) {
+            if ($serviceHolder->classIs($serviceName)) {
                 return $serviceHolder;
             }
         }

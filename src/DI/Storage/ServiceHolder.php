@@ -70,7 +70,16 @@ interface ServiceHolder
      *
      * @return bool
      */
-    public function isA(string $id): bool;
+    public function nameIs(string $id): bool;
+
+    /**
+     * Checks if the service matches by it's class name.
+     *
+     * @param string $className
+     *
+     * @return bool
+     */
+    public function classIs(string $className): bool;
 
     /**
      * Returns the class name with namespace.

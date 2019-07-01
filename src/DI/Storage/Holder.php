@@ -64,9 +64,17 @@ final class Holder implements ServiceHolder
     /**
      * {@inheritDoc}
      */
-    public function isA(string $id): bool
+    public function nameIs(string $id): bool
     {
-        return $this->name === $id || $this->class === $id;
+        return $this->name === $id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function classIs(string $className): bool
+    {
+        return $this->class === $className;
     }
 
     /**

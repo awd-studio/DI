@@ -34,25 +34,18 @@ class StorageTest extends TestCase
         $this->assertInstanceOf(ServiceStorage::class, $instance);
     }
 
-    private function generateService(bool $isA)
-    {
-        $serviceHolder = MockServiceHolder::getMock($this);
-        $serviceHolder
-            ->expects($this->any())
-            ->method('isA')
-            ->willReturn($isA);
-
-        yield $serviceHolder;
-    }
-
     /**
      * @covers ::find
      */
-    public function testFind()
+    public function testFindByName()
     {
         $serviceId = \stdClass::class;
-        $serviceGenTrue = $this->generateService(true);
-        $serviceGenFalse = $this->generateService(false);
+
+        $serviceHolder = MockServiceHolder::getMock($this);
+        $serviceHolder
+            ->expects($this->any())
+            ->method('nameIs')
+            ->willReturn(true);
 
         $resolver = MockArgumentResolver::getMock($this);
         $resolver
@@ -62,14 +55,9 @@ class StorageTest extends TestCase
 
         $registry = MockServiceRegistry::getMock($this);
         $registry
-            ->expects($this->at(0))
+            ->expects($this->any())
             ->method('getIterator')
-            ->willReturn($serviceGenTrue);
-
-        $registry
-            ->expects($this->at(1))
-            ->method('getIterator')
-            ->willReturn($serviceGenFalse);
+            ->willReturn(new \ArrayIterator([$serviceHolder]));
 
         /**
          * @var \AwdStudio\DI\Argument\ArgumentResolver $resolver
@@ -80,9 +68,74 @@ class StorageTest extends TestCase
         $actual = $instance->find($serviceId);
 
         $this->assertInstanceOf(ServiceHolder::class, $actual);
+    }
+
+    /**
+     * @covers ::find
+     */
+    public function testFindByClassName()
+    {
+        $serviceId = 'std.class';
+        $serviceClass = \stdClass::class;
+
+        $serviceHolder = MockServiceHolder::getMock($this);
+        $serviceHolder
+            ->expects($this->any())
+            ->method('nameIs')
+            ->willReturn(false);
+        $serviceHolder->expects($this->any())
+            ->method('classIs')
+            ->willReturn(true);
+
+        $resolver = MockArgumentResolver::getMock($this);
+        $resolver
+            ->expects($this->any())
+            ->method('resolve')
+            ->willReturn($serviceId);
+
+        $registry = MockServiceRegistry::getMock($this);
+        $registry
+            ->expects($this->any())
+            ->method('getIterator')
+            ->willReturn(new \ArrayIterator([$serviceHolder]));
+
+        /**
+         * @var \AwdStudio\DI\Argument\ArgumentResolver $resolver
+         * @var \AwdStudio\DI\Storage\ServiceRegistry   $registry
+         */
+        $instance = new Storage($resolver, $registry);
+
+        $actual = $instance->find($serviceClass);
+
+        $this->assertInstanceOf(ServiceHolder::class, $actual);
+    }
+
+    /**
+     * @covers ::find
+     */
+    public function testFindFail()
+    {
+        $serviceId = \stdClass::class;
+        $resolver = MockArgumentResolver::getMock($this);
+        $resolver
+            ->expects($this->any())
+            ->method('resolve')
+            ->willReturn($serviceId);
+
+        $registry = MockServiceRegistry::getMock($this);
+        $registry
+            ->expects($this->any())
+            ->method('getIterator')
+            ->willReturn(new \ArrayIterator());
+
+        /**
+         * @var \AwdStudio\DI\Argument\ArgumentResolver $resolver
+         * @var \AwdStudio\DI\Storage\ServiceRegistry   $registry
+         */
+        $instance = new Storage($resolver, $registry);
 
         $this->expectException(ServiceNotDefined::class);
-        $instance->find($serviceId);
+        $instance->find('undefined.service');
     }
 
 }

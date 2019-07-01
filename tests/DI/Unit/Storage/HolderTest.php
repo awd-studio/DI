@@ -166,17 +166,31 @@ class HolderTest extends TestCase
     }
 
     /**
-     * @covers ::isA
+     * @covers ::nameIs
      */
-    public function testIsA()
+    public function testNameIs()
     {
-        $this->assertTrue($this->instance->isA($this->name));
-        $this->assertFalse($this->instance->isA('unknown.service'));
+        $this->assertTrue($this->instance->nameIs($this->name));
+        $this->assertFalse($this->instance->nameIs('unknown.service'));
 
-        $this->assertFalse($this->instance->isA(\stdClass::class));
+        $this->assertFalse($this->instance->nameIs(\stdClass::class));
 
         $instance = new Holder(\stdClass::class);
-        $this->assertTrue($instance->isA(\stdClass::class));
+        $this->assertTrue($instance->nameIs(\stdClass::class));
+    }
+
+    /**
+     * @covers ::classIs
+     */
+    public function testClassIs()
+    {
+        $this->assertTrue($this->instance->classIs($this->name));
+        $this->assertFalse($this->instance->classIs('unknown.service'));
+
+        $this->assertFalse($this->instance->classIs(\stdClass::class));
+
+        $instance = new Holder(\stdClass::class);
+        $this->assertTrue($instance->classIs(\stdClass::class));
     }
 
     /**
