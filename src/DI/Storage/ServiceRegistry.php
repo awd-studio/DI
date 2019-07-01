@@ -24,4 +24,24 @@ interface ServiceRegistry extends \IteratorAggregate
      */
     public function getIterator();
 
+    /**
+     * Marks a service with a tag.
+     *
+     * @param string $tag     Tag name.
+     * @param string $service Service class.
+     * @param int    $weight  Service priority.
+     *
+     * @return \AwdStudio\DI\Storage\ServiceRegistry
+     */
+    public function tag(string $tag, string $service, int $weight = 0): self;
+
+    /**
+     * Finds services by tag.
+     *
+     * @param string $tag
+     *
+     * @return iterable
+     */
+    public function findByTag(string $tag): iterable;
+
 }
